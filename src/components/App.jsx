@@ -18,28 +18,20 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    const contactsList = JSON.parse(localStorage.getItem('contacts'))
+    const contactsList = JSON.parse(localStorage.getItem('contacts'));
     if (contactsList && contactsList.length) {
       this.setState({
-      contacts:contactsList
-    })
-    } 
-  }
-  
-  componentDidUpdate(_, prevState) {
-    console.log(prevState)
-    console.log(this.state)
-   
-    const { contacts } = this.state
-    if (contacts.length !== prevState.contacts.length) {
-      console.log('update')
-      localStorage.setItem('contacts', JSON.stringify(contacts))
+        contacts: contactsList,
+      });
     }
-   
   }
 
-
-
+  componentDidUpdate(_, prevState) {
+    const { contacts } = this.state;
+    if (contacts.length !== prevState.contacts.length) {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+  }
 
   addContactHandler = ({ name, number }) => {
     if (this.dublicatedHandler({ name })) {
@@ -94,10 +86,8 @@ export class App extends Component {
   render() {
     const contacts = this.filterContactsHandler();
     const { filter } = this.state;
-    console.log(contacts)
 
     return (
-      
       <div className={css.App}>
         <h1 className={css.phonebook}>Phonebook</h1>
         <ContactFrom onSubmit={this.addContactHandler} />
@@ -106,7 +96,8 @@ export class App extends Component {
         <Filter name={filter} onChange={this.onInputChange} />
         <ContactList
           items={contacts}
-          deleteContactHandler={this.deleteContactHandler}/>
+          deleteContactHandler={this.deleteContactHandler}
+        />
       </div>
     );
   }
